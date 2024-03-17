@@ -19,7 +19,7 @@ public class ListUserCommand extends ListenerAdapter {
 
         StringBuilder a = new StringBuilder();
         a.append("## Liste aller gewhitelisted User:\n\n");
-        a.append("#### Minecraft Username, Minecraft UUID, Discord User\\Wildcard\n");
+        a.append("### Minecraft Username, Minecraft UUID, Discord User\\Wildcard\n");
         if (userList.isEmpty()) a.append("- Die Liste ist leer!");
         for (DBUser user: userList) {
             a.append("- ")

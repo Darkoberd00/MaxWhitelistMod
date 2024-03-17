@@ -1,11 +1,14 @@
 package dev.philtraeger.config;
 
 import com.mojang.datafixers.util.Pair;
-import dev.philtraeger.MaxWhitelistMod;
+import dev.philtraeger.MaxWhitelist;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ModConfigs {
     public static SimpleConfig CONFIG;
     private static ModConfigProvider configs;
+    private static final Logger logger = LogManager.getLogger(MaxWhitelist.class);
 
     public static String BOT_TOKEN;
     public static String GUILD_ID;
@@ -40,6 +43,6 @@ public class ModConfigs {
         MOD_ID = CONFIG.getOrDefault("discord.role.mod", null);
         WHITELISTED_ID = CONFIG.getOrDefault("discord.role.whitelisted", null);
 
-        System.out.println("All " + configs.getConfigsList().size() + " have been set properly");
+        logger.info("All " + configs.getConfigsList().size() + " have been set properly");
     }
 }

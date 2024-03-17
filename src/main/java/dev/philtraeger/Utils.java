@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.entities.Role;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class Utils {

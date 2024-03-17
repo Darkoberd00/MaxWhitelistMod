@@ -1,7 +1,6 @@
 package dev.philtraeger.events;
 
 import com.google.gson.Gson;
-import com.mojang.authlib.GameProfile;
 import dev.philtraeger.MaxWhitelist;
 import dev.philtraeger.Utils;
 import dev.philtraeger.config.ModConfigs;
@@ -9,19 +8,17 @@ import dev.philtraeger.db.Database;
 import dev.philtraeger.embeds.ErrorEmbed;
 import dev.philtraeger.embeds.WhitelistEmbed;
 import dev.philtraeger.json.MinecraftUser;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.PrivateChannel;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
-import net.minecraft.server.WhitelistEntry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,6 +30,8 @@ import java.util.*;
 
 
 public class MessageReceivedListener implements EventListener {
+
+    private static final Logger logger = LogManager.getLogger(MaxWhitelist.class);
 
     @Override
     public void onEvent(@NotNull GenericEvent event)
@@ -90,10 +89,9 @@ public class MessageReceivedListener implements EventListener {
             return;
         }
 
+        logger.info("DiscordChannel Add: " + minecraftUser.username + ", "+ minecraftUser.uuid);
         db.addUser(member.getUser().getId(), minecraftUser.username, minecraftUser.uuid, wildcard);
-
         WhitelistEmbed eb = new WhitelistEmbed(minecraftUser.username, minecraftUser.uuid, wildcard, true);
-
         privateChannel.sendMessageEmbeds(eb.getEmbed()).complete();
         MaxWhitelist.getInstance().add(minecraftUser.uuid, minecraftUser.username);
     }
