@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "maxwhitelistmod",
+	"version": "${version}",
+	"name": "MaxWhitelistMod",
+	"description": "This is a Whitelist Mod with Discord Integration",
+	"authors": [
+		"Phil Träger"
+	],
+	"contact": {
+		"homepage": "https://phil-traeger.dev",
+		"sources": "https://github.com/Darkoberd00/MaxWhitelistMod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/maxwhitelistmod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.philtraeger.MaxWhitelistMod"
+		]
+	},
+	"mixins": [
+		"maxwhitelistmod.mixins.json",
+		{
+			"config": "maxwhitelistmod.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.7",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
