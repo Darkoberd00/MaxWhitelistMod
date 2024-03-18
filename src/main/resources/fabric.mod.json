@@ -20,11 +20,7 @@
 		]
 	},
 	"mixins": [
-		"maxwhitelistmod.mixins.json",
-		{
-			"config": "maxwhitelistmod.client.mixins.json",
-			"environment": "client"
-		}
+		"maxwhitelistmod.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.15.7",

@@ -15,9 +15,9 @@ import net.dv8tion.jda.api.entities.channel.concrete.PrivateChannel;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.util.*;
 
 public class MessageReceivedListener implements EventListener {
 
-    private static final Logger logger = LogManager.getLogger(MaxWhitelist.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger("MaxWhitelistMod");
 
     @Override
     public void onEvent(@NotNull GenericEvent event)
@@ -89,7 +89,7 @@ public class MessageReceivedListener implements EventListener {
             return;
         }
 
-        logger.info("DiscordChannel Add: " + minecraftUser.username + ", "+ minecraftUser.uuid);
+        LOGGER.info("DiscordChannel Add: " + minecraftUser.username + ", "+ minecraftUser.uuid);
         db.addUser(member.getUser().getId(), minecraftUser.username, minecraftUser.uuid, wildcard);
         WhitelistEmbed eb = new WhitelistEmbed(minecraftUser.username, minecraftUser.uuid, wildcard, true);
         privateChannel.sendMessageEmbeds(eb.getEmbed()).complete();
@@ -108,7 +108,7 @@ public class MessageReceivedListener implements EventListener {
         // reading from the urlconnection using the bufferedreader
         while ((line = bufferedReader.readLine()) != null)
         {
-            content.append(line + "\n");
+            content.append(line).append("\n");
         }
         bufferedReader.close();
 

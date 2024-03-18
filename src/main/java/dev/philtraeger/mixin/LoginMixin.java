@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ServerLoginNetworkHandler.class)
 public class LoginMixin {
 
-	@Shadow @Final private MinecraftServer server;
+	@Shadow @Final
+	MinecraftServer server;
 
 	@Inject(method = "onHello", at = @At(value = "HEAD"))
 	private void login(LoginHelloC2SPacket packet, CallbackInfo ci) {

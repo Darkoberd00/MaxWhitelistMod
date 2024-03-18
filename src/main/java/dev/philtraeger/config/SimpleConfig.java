@@ -24,12 +24,13 @@ package dev.philtraeger.config;
  */
 
 import net.fabricmc.loader.api.FabricLoader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ import java.util.Scanner;
 
 public class SimpleConfig {
 
-    private static final Logger LOGGER = LogManager.getLogger("SimpleConfig");
+    public static final Logger LOGGER = LoggerFactory.getLogger("MaxWhitelistMod");
     private final HashMap<String, String> config = new HashMap<>();
     private final ConfigRequest request;
     private boolean broken = false;
@@ -110,7 +111,7 @@ public class SimpleConfig {
         Files.createFile( request.file.toPath() );
 
         // write default config data
-        PrintWriter writer = new PrintWriter(request.file, "UTF-8");
+        PrintWriter writer = new PrintWriter(request.file, StandardCharsets.UTF_8);
         writer.write( request.getConfig() );
         writer.close();
 
@@ -127,7 +128,8 @@ public class SimpleConfig {
         if( !entry.isEmpty() && !entry.startsWith( "#" ) ) {
             String[] parts = entry.split("=", 2);
             if( parts.length == 2 ) {
-                config.put( parts[0], parts[1] );
+                String temp = parts[1].split(" #")[0];
+                config.put( parts[0], temp );
             }else{
                 throw new RuntimeException("Syntax error in config file on line " + line + "!");
             }
@@ -145,7 +147,7 @@ public class SimpleConfig {
                 createConfig();
             } catch (IOException e) {
                 LOGGER.error( identifier + " failed to generate!" );
-                LOGGER.trace( e );
+                LOGGER.trace( e.getMessage() );
                 broken = true;
             }
         }
@@ -155,7 +157,7 @@ public class SimpleConfig {
                 loadConfig();
             } catch (Exception e) {
                 LOGGER.error( identifier + " failed to load!" );
-                LOGGER.trace( e );
+                LOGGER.trace( e.getMessage() );
                 broken = true;
             }
         }

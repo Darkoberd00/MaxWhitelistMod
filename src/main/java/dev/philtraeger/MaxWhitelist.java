@@ -5,8 +5,8 @@ import dev.philtraeger.db.DBUser;
 import dev.philtraeger.db.Database;
 import net.minecraft.server.Whitelist;
 import net.minecraft.server.WhitelistEntry;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class MaxWhitelist {
     private static MaxWhitelist instance;
     private static Whitelist whitelist;
 
-    private static final Logger logger = LogManager.getLogger(MaxWhitelist.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger("MaxWhitelistMod");
 
     private MaxWhitelist() {
         String currentDir = System.getProperty("user.dir");
@@ -32,9 +32,9 @@ public class MaxWhitelist {
             }
             whitelist.save();
         } catch (IOException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
-        logger.info("Whitelist Loaded");
+        LOGGER.info("Whitelist Loaded");
     }
 
     public static MaxWhitelist getInstance() {
@@ -54,7 +54,7 @@ public class MaxWhitelist {
             instance.getWhitelist().remove(new WhitelistEntry(new GameProfile(UUID.fromString(uuid), username)));
             instance.getWhitelist().save();
         } catch (IOException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ public class MaxWhitelist {
             instance.getWhitelist().add(new WhitelistEntry(new GameProfile(UUID.fromString(uuid), username)));
             instance.getWhitelist().save();
         } catch (IOException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
     }
 }

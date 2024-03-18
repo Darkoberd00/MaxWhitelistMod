@@ -1,23 +1,22 @@
 package dev.philtraeger.db;
 
-import dev.philtraeger.MaxWhitelist;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class Database {
-    private static final Logger logger = LogManager.getLogger(MaxWhitelist.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger("MaxWhitelistMod");
     private static Database instance;
     static Connection conn = null;
     private Database() {
         createNewDatabase();
         createTable();
         try {
-            logger.info(conn.getMetaData().getDriverName());
+            LOGGER.info(conn.getMetaData().getDriverName());
         } catch (SQLException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
 
     }
@@ -42,10 +41,10 @@ public class Database {
             if (conn == null) return;
 
             DatabaseMetaData meta = conn.getMetaData();
-            logger.info("The driver name is " + meta.getDriverName());
-            logger.info("A new database has been created.");
+            LOGGER.info("The driver name is " + meta.getDriverName());
+            LOGGER.info("A new database has been created.");
         } catch (SQLException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -63,7 +62,7 @@ public class Database {
             // create a new table
             stmt.execute(sql);
         } catch (SQLException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -78,7 +77,7 @@ public class Database {
             pstmt.setBoolean(4, wildcard);
             pstmt.executeUpdate();
         }  catch (SQLException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
 
     }
@@ -91,7 +90,7 @@ public class Database {
             stmt.setString(1, username);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -103,7 +102,7 @@ public class Database {
             stmt.setString(1, discordID);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -119,7 +118,7 @@ public class Database {
                 if (!rs.getString("discord_id").isEmpty()) return true;
             }
         } catch (SQLException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
         return false;
     }
@@ -136,7 +135,7 @@ public class Database {
                 if (!rs.getString("username_minecraft").isEmpty()) return true;
             }
         } catch (SQLException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
         return false;
     }
@@ -158,7 +157,7 @@ public class Database {
                 users.add(user);
             }
         } catch (SQLException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
         return users;
     }
@@ -178,7 +177,7 @@ public class Database {
             user.wildcard = rs.getBoolean("wildcard");
             return user;
         } catch (SQLException e) {
-            logger.error(e.getStackTrace());
+            LOGGER.error(e.getMessage());
         }
         return null;
     }

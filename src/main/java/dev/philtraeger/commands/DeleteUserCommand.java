@@ -8,13 +8,13 @@ import dev.philtraeger.embeds.SuccessEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
 public class DeleteUserCommand extends ListenerAdapter {
-    private static final Logger logger = LogManager.getLogger(MaxWhitelist.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger("MaxWhitelistMod");
 
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
@@ -40,7 +40,7 @@ public class DeleteUserCommand extends ListenerAdapter {
 
         DBUser user = db.getUser(username);
 
-        logger.info("Command Delete: " + user.usernameMinecraft + ", "+ user.uuidMinecraft);
+        LOGGER.info("Command Delete: " + user.usernameMinecraft + ", "+ user.uuidMinecraft);
         MaxWhitelist.getInstance().remove(user.uuidMinecraft, user.usernameMinecraft);
         db.removeUserViaUsername(username);
         SuccessEmbed successEmbed = new SuccessEmbed(

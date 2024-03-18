@@ -3,12 +3,13 @@ package dev.philtraeger.config;
 import com.mojang.datafixers.util.Pair;
 import dev.philtraeger.MaxWhitelist;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ModConfigs {
     public static SimpleConfig CONFIG;
     private static ModConfigProvider configs;
-    private static final Logger logger = LogManager.getLogger(MaxWhitelist.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger("MaxWhitelistMod");
 
     public static String BOT_TOKEN;
     public static String GUILD_ID;
@@ -16,6 +17,8 @@ public class ModConfigs {
     public static String ADMIN_ID;
     public static String MOD_ID;
     public static String WHITELISTED_ID;
+
+    public static String IP_ADDRESS;
 
     public static void registerConfigs() {
         configs = new ModConfigProvider();
@@ -33,6 +36,7 @@ public class ModConfigs {
         configs.addKeyValuePair(new Pair<>("discord.role.admin", "AdminID"), "String");
         configs.addKeyValuePair(new Pair<>("discord.role.mod", "ModID"), "String");
         configs.addKeyValuePair(new Pair<>("discord.role.whitelisted", "WhitelistedID"), "String");
+        configs.addKeyValuePair(new Pair<>("minecraft.ip","IPAddress"), "String");
     }
 
     private static void assignConfigs() {
@@ -43,6 +47,6 @@ public class ModConfigs {
         MOD_ID = CONFIG.getOrDefault("discord.role.mod", null);
         WHITELISTED_ID = CONFIG.getOrDefault("discord.role.whitelisted", null);
 
-        logger.info("All " + configs.getConfigsList().size() + " have been set properly");
+        LOGGER.info("All " + configs.getConfigsList().size() + " Configs have been set properly");
     }
 }
