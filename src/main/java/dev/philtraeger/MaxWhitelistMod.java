@@ -30,25 +30,24 @@ public class MaxWhitelistMod implements ModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("MaxWhitelistMod");
+    public static JDA jda;
 
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
         ModConfigs.registerConfigs();
         Database.getInstance();
         MaxWhitelist.getInstance();
 
-		JDA jda = JDABuilder.createDefault(ModConfigs.BOT_TOKEN)
+        jda = JDABuilder.createDefault(ModConfigs.BOT_TOKEN)
                 .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS)
                 .addEventListeners(new MessageReceivedListener())
 				.addEventListeners(new ReadyListener())
                 .addEventListeners(new DeleteUserCommand())
                 .addEventListeners(new AutoComplete())
                 .addEventListeners(new ListUserCommand())
-                .setActivity(Activity.playing("auf dem besten Minecraft Server EU-WEST Alla!"))
 				.build();
+
+
 
         Timer timer = new Timer();
 

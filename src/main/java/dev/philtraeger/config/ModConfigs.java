@@ -46,6 +46,7 @@ public class ModConfigs {
         ADMIN_ID = CONFIG.getOrDefault("discord.role.admin", null);
         MOD_ID = CONFIG.getOrDefault("discord.role.mod", null);
         WHITELISTED_ID = CONFIG.getOrDefault("discord.role.whitelisted", null);
+        IP_ADDRESS = CONFIG.getOrDefault("minecraft.ip", null);
 
         LOGGER.info("All " + configs.getConfigsList().size() + " Configs have been set properly");
     }
